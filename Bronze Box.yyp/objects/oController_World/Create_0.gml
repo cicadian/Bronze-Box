@@ -15,6 +15,7 @@ global.fog_sat = 0;
 global.fog_val = 0;
 global.fog_start = CELL_SIZE_WORLD;
 global.fog_end = CELL_SIZE_WORLD * 5;
+global.debug_stats = true;
 var _layer = layer_get_id(LAYER_NAME);
 layer_set_visible(_layer, false);
 #endregion

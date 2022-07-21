@@ -9,6 +9,9 @@ if (keyboard_check_pressed(vk_tab)){
 }
 
 // RENDER DEBUGGING FOR ENVIRONMENTAL DESIGN
+if (keyboard_check_pressed(vk_return)){
+	global.debug_stats = !global.debug_stats;
+}
 if (DEBUG_FOV){
 	if (keyboard_check(vk_f1)){
 		global.fov++;
