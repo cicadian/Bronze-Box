@@ -9,6 +9,8 @@ function player_freelook(){
 	if (_press_aim){
 		yawStart = mouse_x - (NATIVE_W / 2);
 		pitchStart = mouse_y - (NATIVE_H / 2);
+		mouseStartX = window_mouse_get_x();
+		mouseStartY = window_mouse_get_y();
 		window_set_cursor(cr_none);
 	}
 	if (_hold_aim){
@@ -19,9 +21,7 @@ function player_freelook(){
 	}
 	if (_release_aim){
 		window_set_cursor(cr_default);
-		var _returnX = yawStart + (NATIVE_W / 2);
-		var _returnY = pitchStart + (NATIVE_H / 2);
-		window_mouse_set(_returnX, _returnY);
+		window_mouse_set(mouseStartX, mouseStartY);
 		resetAim = true;
 	}
 	if (resetAim){

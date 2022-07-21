@@ -8,6 +8,9 @@ resetAim = false;
 startX = x;
 startY = y;
 
+mouseStartX = mouse_x;
+mouseStartY = mouse_y;
+
 nextX = x;
 nextY = y;
 
