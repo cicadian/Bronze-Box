@@ -43,3 +43,5 @@ texcoord_floor_v = 0.5;
 texcoord_ceiling_u = 0;
 texcoord_ceiling_v = 0;
 #endregion
+
+surface_world = -1;
