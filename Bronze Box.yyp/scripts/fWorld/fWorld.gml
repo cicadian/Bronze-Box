@@ -1,11 +1,16 @@
+/// @func world_init
+/// @desc {void} builds the world
+function world_init(){
+	world_width = room_width div CELL_SIZE_WORLD;
+	world_height = room_height div CELL_SIZE_WORLD;
+	global.world_grid = ds_grid_create(world_width, world_height);
+	ds_grid_clear(global.world_grid, __CELL.FULL);
+	tile_to_grid(LAYER_NAME, global.world_grid, __CELL.EMPTY);
+}
 /// @func world_build
 /// @desc {void} builds the world
 function world_build(){
-	global.world_grid = ds_grid_create(world_width, world_height);
-	ds_grid_clear(global.world_grid, __CELL.FULL);
 	world_texture = choose(tex_room_0, tex_room_1);
-	tile_to_grid(LAYER_NAME, global.world_grid, __CELL.EMPTY);
-
 	world_vbuff = vertex_create_buffer();
 	vertex_begin(world_vbuff, world_format);
 
