@@ -1,10 +1,10 @@
 {
   "spriteId": {
-    "name": "sFloor",
-    "path": "sprites/sFloor/sFloor.yy",
+    "name": "sEdit_Tiles",
+    "path": "sprites/sEdit_Tiles/sEdit_Tiles.yy",
   },
-  "tileWidth": 32,
-  "tileHeight": 32,
+  "tileWidth": 16,
+  "tileHeight": 16,
   "tilexoff": 0,
   "tileyoff": 0,
   "tilehsep": 0,

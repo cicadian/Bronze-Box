@@ -1,13 +1,16 @@
-/// @func world_build
-/// @desc {void} builds the world
-function world_build(){
+/// @func world_init
+/// @desc {void} initializes the world variables used outside of building world geometry
+function world_init(){
 	world_width = room_width div CELL_SIZE_WORLD;
 	world_height = room_height div CELL_SIZE_WORLD;
 	global.world_grid = ds_grid_create(world_width, world_height);
 	ds_grid_clear(global.world_grid, __CELL.FULL);
-	world_texture = choose(tex_room_0, tex_room_1);
 	tile_to_grid(LAYER_NAME, global.world_grid, __CELL.EMPTY);
-
+}
+/// @func world_build
+/// @desc {void} builds the world
+function world_build(){
+	world_texture = tex_room_0;
 	world_vbuff = vertex_create_buffer();
 	vertex_begin(world_vbuff, world_format);
 
@@ -45,9 +48,13 @@ function world_build_wall(_gridX, _gridY, _wall){
 	var _z = 0;
 	var _x2 = _x + CELL_SIZE_WORLD;
 	var _y2 = _y + CELL_SIZE_WORLD;
-	var _z2 = _z + CELL_SIZE_WORLD;
+	var _z2 = _z + CELL_SIZE_WORLD * 0.8125;
 
-	var _colour = c_white;
+	var _lightLevel = global.light_grid[# _gridX, _gridY] + global.light_ambient;
+	var _colour = make_colour_rgb(_lightLevel * 255, _lightLevel * 255, _lightLevel * 255);
+	if (_lightLevel > 1){
+		_colour = c_white;
+	}
 
 	var _build = false;
 	// NOTE Each triangle pair shares 2 verts with identical positions
@@ -66,20 +73,20 @@ function world_build_wall(_gridX, _gridY, _wall){
 				vertex_texcoord(world_vbuff, texcoord_wall_u, texcoord_wall_v);
 				vertex_colour(world_vbuff, _colour, 1);
 				vertex_position_3d(world_vbuff, _x2, _y2, _z2);
-				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_size, texcoord_wall_v);
+				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_wall_s, texcoord_wall_v);
 				vertex_colour(world_vbuff, _colour, 1);
 				vertex_position_3d(world_vbuff, _x2, _y2, _z);
-				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_size, texcoord_wall_v + texcoord_size);
+				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_wall_s, texcoord_wall_v + texcoord_wall_s);
 				vertex_colour(world_vbuff, _colour, 1);
 				// Tri 2
 				vertex_position_3d(world_vbuff, _x2, _y, _z2);
 				vertex_texcoord(world_vbuff, texcoord_wall_u, texcoord_wall_v);
 				vertex_colour(world_vbuff, _colour, 1);
 				vertex_position_3d(world_vbuff, _x2, _y2, _z);
-				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_size, texcoord_wall_v + texcoord_size);
+				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_wall_s, texcoord_wall_v + texcoord_wall_s);
 				vertex_colour(world_vbuff, _colour, 1);
 				vertex_position_3d(world_vbuff, _x2, _y, _z);
-				vertex_texcoord(world_vbuff, texcoord_wall_u, texcoord_wall_v + texcoord_size);
+				vertex_texcoord(world_vbuff, texcoord_wall_u, texcoord_wall_v + texcoord_wall_s);
 				vertex_colour(world_vbuff, _colour, 1);
 			}
 		break;
@@ -96,20 +103,20 @@ function world_build_wall(_gridX, _gridY, _wall){
 				vertex_texcoord(world_vbuff, texcoord_wall_u, texcoord_wall_v);
 				vertex_colour(world_vbuff, _colour, 1);
 				vertex_position_3d(world_vbuff, _x2, _y, _z2);
-				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_size, texcoord_wall_v);
+				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_wall_s, texcoord_wall_v);
 				vertex_colour(world_vbuff, _colour, 1);
 				vertex_position_3d(world_vbuff, _x, _y, _z);
-				vertex_texcoord(world_vbuff, texcoord_wall_u, texcoord_wall_v + texcoord_size);
+				vertex_texcoord(world_vbuff, texcoord_wall_u, texcoord_wall_v + texcoord_wall_s);
 				vertex_colour(world_vbuff, _colour, 1);
 				// Tri 2
 				vertex_position_3d(world_vbuff, _x2, _y, _z2);
-				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_size, texcoord_wall_v);
+				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_wall_s, texcoord_wall_v);
 				vertex_colour(world_vbuff, _colour, 1);
 				vertex_position_3d(world_vbuff, _x2, _y, _z);
-				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_size, texcoord_wall_v + texcoord_size);
+				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_wall_s, texcoord_wall_v + texcoord_wall_s);
 				vertex_colour(world_vbuff, _colour, 1);
 				vertex_position_3d(world_vbuff, _x, _y, _z);
-				vertex_texcoord(world_vbuff, texcoord_wall_u, texcoord_wall_v + texcoord_size);
+				vertex_texcoord(world_vbuff, texcoord_wall_u, texcoord_wall_v + texcoord_wall_s);
 				vertex_colour(world_vbuff, _colour, 1);
 			}
 		break;
@@ -123,23 +130,23 @@ function world_build_wall(_gridX, _gridY, _wall){
 			if (_build){
 				// Tri 1
 				vertex_position_3d(world_vbuff, _x, _y2, _z);
-				vertex_texcoord(world_vbuff, texcoord_wall_u, texcoord_wall_v + texcoord_size);
+				vertex_texcoord(world_vbuff, texcoord_wall_u, texcoord_wall_v + texcoord_wall_s);
 				vertex_colour(world_vbuff, _colour, 1);
 				vertex_position_3d(world_vbuff, _x, _y2, _z2);
 				vertex_texcoord(world_vbuff, texcoord_wall_u, texcoord_wall_v);
 				vertex_colour(world_vbuff, _colour, 1);
 				vertex_position_3d(world_vbuff, _x, _y, _z2);
-				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_size, texcoord_wall_v);
+				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_wall_s, texcoord_wall_v);
 				vertex_colour(world_vbuff, _colour, 1);
 				// Tri 2
 				vertex_position_3d(world_vbuff, _x, _y, _z);
-				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_size, texcoord_wall_v + texcoord_size);
+				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_wall_s, texcoord_wall_v + texcoord_wall_s);
 				vertex_colour(world_vbuff, _colour, 1);
 				vertex_position_3d(world_vbuff, _x, _y2, _z);
-				vertex_texcoord(world_vbuff, texcoord_wall_u, texcoord_wall_v + texcoord_size);
+				vertex_texcoord(world_vbuff, texcoord_wall_u, texcoord_wall_v + texcoord_wall_s);
 				vertex_colour(world_vbuff, _colour, 1);
 				vertex_position_3d(world_vbuff, _x, _y, _z2);
-				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_size, texcoord_wall_v);
+				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_wall_s, texcoord_wall_v);
 				vertex_colour(world_vbuff, _colour, 1);
 			}
 		break;
@@ -153,23 +160,23 @@ function world_build_wall(_gridX, _gridY, _wall){
 			if (_build){
 				// Tri 1
 				vertex_position_3d(world_vbuff, _x2, _y2, _z);
-				vertex_texcoord(world_vbuff, texcoord_wall_u, texcoord_wall_v + texcoord_size);
+				vertex_texcoord(world_vbuff, texcoord_wall_u, texcoord_wall_v + texcoord_wall_s);
 				vertex_colour(world_vbuff, _colour, 1);
 				vertex_position_3d(world_vbuff, _x2, _y2, _z2);
 				vertex_texcoord(world_vbuff, texcoord_wall_u, texcoord_wall_v);
 				vertex_colour(world_vbuff, _colour, 1);
 				vertex_position_3d(world_vbuff, _x, _y2, _z2);
-				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_size, texcoord_wall_v);
+				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_wall_s, texcoord_wall_v);
 				vertex_colour(world_vbuff, _colour, 1);
 				// Tri 2
 				vertex_position_3d(world_vbuff, _x, _y2, _z);
-				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_size, texcoord_wall_v + texcoord_size);
+				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_wall_s, texcoord_wall_v + texcoord_wall_s);
 				vertex_colour(world_vbuff, _colour, 1);
 				vertex_position_3d(world_vbuff, _x2, _y2, _z);
-				vertex_texcoord(world_vbuff, texcoord_wall_u, texcoord_wall_v + texcoord_size);
+				vertex_texcoord(world_vbuff, texcoord_wall_u, texcoord_wall_v + texcoord_wall_s);
 				vertex_colour(world_vbuff, _colour, 1);
 				vertex_position_3d(world_vbuff, _x, _y2, _z2);
-				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_size, texcoord_wall_v);
+				vertex_texcoord(world_vbuff, texcoord_wall_u + texcoord_wall_s, texcoord_wall_v);
 				vertex_colour(world_vbuff, _colour, 1);
 			}
 		break;

@@ -62,6 +62,7 @@ function player_move_rigid(){
 			}
 		}
 	}
+	oController_World.rebuild = true;
 }
 
 /// @func player_turn_smooth
@@ -192,6 +193,7 @@ function player_move_smooth(){
 			_goAgain = keyboard_check(KEY_FORWARD) || keyboard_check(KEY_BACKWARD);
 			moving = false;
 			moveCounter = 1;
+			oController_World.rebuild = true;
 		}
 	}
 	// Remove 1 frame pause when moving to next tile while holding

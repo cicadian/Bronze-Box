@@ -8,18 +8,18 @@ if (!is_undefined(world_vbuff)){
 	var _playerYaw = oPlayer.yaw;
 	var _playerPitch = oPlayer.pitch;
 	
-	var _camX = round(oPlayer.x);
-	var _camY = round(oPlayer.y);
-	var _camZ = round(oPlayer.z);
+	var _camX = oPlayer.x;
+	var _camY = oPlayer.y;
+	var _camZ = oPlayer.z;
 	var _camDX = dcos(_playerDir + -_playerYaw);
 	var _camDY = -dsin(_playerDir + -_playerYaw);
 	var _camDZ = -dsin(_playerPitch);
 	
 	var _aspect = GAME_ASPECT_DEFAULT;
-	
+
+	gpu_set_alphatestenable(true);
 	gpu_set_ztestenable(true);
 	gpu_set_zwriteenable(true);
-	gpu_set_cullmode(cull_counterclockwise);
 	gpu_set_tex_repeat(true);
 	
 	var _viewPrev = matrix_get(matrix_view);
@@ -29,7 +29,7 @@ if (!is_undefined(world_vbuff)){
 												_camX + _camDX, _camY + _camDY, _camZ + _camDZ,
 												0, 0, 1));
 	matrix_set(matrix_projection, matrix_build_projection_perspective_fov(global.fov, _aspect,  1, 2000));
-	gpu_set_fog(true, global.fog_color, global.fog_start, global.fog_end);
+	gpu_set_fog(DEBUG_FOG_ENABLE, global.fog_color, global.fog_start, global.fog_end);
 	
 	vertex_submit(world_vbuff, pr_trianglelist, world_texture);
 	surface_reset_target();
