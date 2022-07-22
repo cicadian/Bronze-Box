@@ -121,3 +121,7 @@ if (DEBUG_FOG_COLOR){
 	}
 	global.fog_color = make_colour_hsv(global.fog_hue, global.fog_sat, global.fog_val);
 }
+
+if (keyboard_check_pressed(vk_lshift)){
+	lightmap_build();
+}

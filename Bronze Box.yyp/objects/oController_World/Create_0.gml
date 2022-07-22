@@ -8,6 +8,7 @@ world_width = undefined;
 world_height = undefined;
 world_texture = undefined;
 global.world_grid = undefined;
+global.light_grid = undefined;
 global.fov = 70;
 global.fog_color = c_black;
 global.fog_hue = 0;
