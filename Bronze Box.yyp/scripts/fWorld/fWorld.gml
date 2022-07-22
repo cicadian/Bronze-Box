@@ -1,5 +1,5 @@
 /// @func world_init
-/// @desc {void} builds the world
+/// @desc {void} initializes the world variables used outside of building world geometry
 function world_init(){
 	world_width = room_width div CELL_SIZE_WORLD;
 	world_height = room_height div CELL_SIZE_WORLD;
