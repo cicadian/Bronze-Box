@@ -1,4 +1,4 @@
-z = 20;
+z = 8;
 visible = false;
 
 moving = false;
