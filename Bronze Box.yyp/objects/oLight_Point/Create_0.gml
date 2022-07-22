@@ -1,1 +1,1 @@
-radius = 5;
+radius = 3;

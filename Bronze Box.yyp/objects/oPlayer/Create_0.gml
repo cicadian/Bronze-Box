@@ -1,3 +1,5 @@
+radius = 3; // used for dynamic lighting
+
 z = 8;
 visible = false;
 

@@ -10,7 +10,7 @@ function world_init(){
 /// @func world_build
 /// @desc {void} builds the world
 function world_build(){
-	world_texture = choose(tex_room_0, tex_room_1);
+	world_texture = tex_room_0;
 	world_vbuff = vertex_create_buffer();
 	vertex_begin(world_vbuff, world_format);
 

@@ -9,6 +9,15 @@ function lightmap_build(){
 		var _gridX = x div CELL_SIZE_WORLD;
 		var _gridY = y div CELL_SIZE_WORLD;
 		lightmap_search(_gridX, _gridY, radius, _openset);
+		ds_grid_clear(_openset, true);
+	}
+	if (DYNAMIC_LIGHTING){
+		with (oPlayer){
+			var _gridX = x div CELL_SIZE_WORLD;
+			var _gridY = y div CELL_SIZE_WORLD;
+			lightmap_search(_gridX, _gridY, radius, _openset);
+			ds_grid_clear(_openset, true);
+		}
 	}
 	ds_grid_destroy(_openset);
 }

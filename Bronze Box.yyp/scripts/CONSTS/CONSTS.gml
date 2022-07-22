@@ -17,6 +17,7 @@
 #macro CELL_SIZE_WORLD 16 // size of the cells in world space
 #macro CELL_SIZE_EDITOR 16 // size of tiles in the room editor
 #macro GAME_ASPECT_DEFAULT NATIVE_W / NATIVE_H // 1.7~
+#macro DYNAMIC_LIGHTING true
 
 enum __CELL{ // used to quickly reference map cells
 	FULL, // this is a wall
