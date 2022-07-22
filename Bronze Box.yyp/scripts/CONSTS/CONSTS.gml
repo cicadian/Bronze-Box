@@ -5,7 +5,7 @@
 #macro DEBUG_FOV false
 #macro DEBUG_FOG_DISTANCE true
 #macro DEBUG_FOG_COLOR true
-#macro DEBUG_FOG_ENABLE false
+#macro DEBUG_FOG_ENABLE true
 // Game
 #macro FREELOOK_RADIUS 60 // 120 degree angle on view cone
 

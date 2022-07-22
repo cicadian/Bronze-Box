@@ -1,8 +1,6 @@
 /// @func world_build
 /// @desc {void} builds the world
 function world_build(){
-	world_width = room_width div CELL_SIZE_WORLD;
-	world_height = room_height div CELL_SIZE_WORLD;
 	global.world_grid = ds_grid_create(world_width, world_height);
 	ds_grid_clear(global.world_grid, __CELL.FULL);
 	world_texture = choose(tex_room_0, tex_room_1);
@@ -47,7 +45,11 @@ function world_build_wall(_gridX, _gridY, _wall){
 	var _y2 = _y + CELL_SIZE_WORLD;
 	var _z2 = _z + CELL_SIZE_WORLD * 0.8125;
 
-	var _colour = c_white;
+	var _lightLevel = global.light_grid[# _gridX, _gridY] + global.light_ambient;
+	var _colour = make_colour_rgb(_lightLevel * 255, _lightLevel * 255, _lightLevel * 255);
+	if (_lightLevel > 1){
+		_colour = c_white;
+	}
 
 	var _build = false;
 	// NOTE Each triangle pair shares 2 verts with identical positions
