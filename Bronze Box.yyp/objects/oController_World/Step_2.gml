@@ -32,6 +32,9 @@ if (!is_undefined(world_vbuff)){
 	gpu_set_fog(DEBUG_FOG_ENABLE, global.fog_color, global.fog_start, global.fog_end);
 	
 	vertex_submit(world_vbuff, pr_trianglelist, world_texture);
+	with (oAct_Slime){
+		vertex_submit(actor_vbuff, pr_trianglelist, actor_texture);
+	}
 	surface_reset_target();
 	
 	gpu_set_fog(false, global.fog_color, global.fog_start, global.fog_end);

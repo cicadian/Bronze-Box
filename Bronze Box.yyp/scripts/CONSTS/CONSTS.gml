@@ -36,6 +36,15 @@ enum __WALL{ // used to quickly reference the sides(faces/walls) of our world ce
 	SIZE // used to get how long this enum is, __WALL.SIZE - 1
 }
 
+enum __DIR{
+	RIGHT,
+	UP,
+	LEFT,
+	DOWN,
+	
+	SIZE
+}
+
 // Player
 #macro MOVE_SMOOTH true
 #macro KEY_FORWARD ord("W")
