@@ -38,6 +38,7 @@ function player_move_rigid(){
 	var _moveY = false;
 
 	if (keyboard_check_pressed(KEY_FORWARD)){
+		oController_World.rebuild = true;
 		// Make sure we're not trying to leave the grid
 		_moveX = (_gridX + _vecX) < ds_grid_width(global.world_grid) && (_gridX + _vecX) >= 0;
 		_moveY = (_gridY + _vecY) < ds_grid_height(global.world_grid) && (_gridY + _vecY) >= 0;
@@ -52,6 +53,7 @@ function player_move_rigid(){
 		}
 	}
 	else if (keyboard_check_pressed(KEY_BACKWARD)){
+		oController_World.rebuild = true;
 		// Make sure we're not trying to leave the grid
 		_moveX = (_gridX - _vecX) < ds_grid_width(global.world_grid) && (_gridX - _vecX) >= 0;
 		_moveY = (_gridY - _vecY) < ds_grid_height(global.world_grid) && (_gridY - _vecY) >= 0;
@@ -65,7 +67,6 @@ function player_move_rigid(){
 			}
 		}
 	}
-	oController_World.rebuild = true;
 }
 
 /// @func player_turn_smooth
