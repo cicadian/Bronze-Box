@@ -46,7 +46,7 @@ enum __DIR{
 }
 
 // Player
-#macro MOVE_SMOOTH true
+#macro MOVE_SMOOTH false
 #macro KEY_FORWARD ord("W")
 #macro KEY_BACKWARD ord("S")
 #macro KEY_RIGHT ord("D")

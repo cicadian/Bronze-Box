@@ -32,10 +32,29 @@ if (!is_undefined(world_vbuff)){
 	gpu_set_fog(DEBUG_FOG_ENABLE, global.fog_color, global.fog_start, global.fog_end);
 	
 	vertex_submit(world_vbuff, pr_trianglelist, world_texture);
+	
+	shader_set(gBillboard);
+	// the frame should change based on where the player is viewing the actor from and how the actor is oriented
+	var _frame = 0;
+	var _pFacing = oPlayer.dir div 90;
 	with (oAct_Slime){
-		vertex_submit(actor_vbuff, pr_trianglelist, actor_texture);
+		repeat(_pFacing){
+			_frame++;
+			if (_frame > 3){
+				_frame = 0;
+			}
+		}
+		repeat(facing){
+			_frame--;
+			if (_frame < 0){
+				_frame = 3;
+			}
+		}
+		matrix_set(matrix_world, matrix_build(x, y, z, 0, 0, 0, 1, 1, 1));
+		draw_sprite_ext(sAct_Slime_NonPaged, _frame, 0, 0, 0.125, 0.125, 0, c_white, 1);
+		matrix_set(matrix_world, matrix_build_identity());
 	}
-	surface_reset_target();
+	shader_reset();
 	
 	gpu_set_fog(false, global.fog_color, global.fog_start, global.fog_end);
 	matrix_set(matrix_world, matrix_build_identity());
@@ -46,4 +65,6 @@ if (!is_undefined(world_vbuff)){
 	gpu_set_zwriteenable(false);
 	gpu_set_cullmode(cull_noculling);
 	gpu_set_tex_repeat(false);
+	
+	surface_reset_target();
 }

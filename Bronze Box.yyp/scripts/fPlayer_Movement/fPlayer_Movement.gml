@@ -11,12 +11,15 @@ function player_get_in_motion(){
 function player_turn_rigid(){
 	if (keyboard_check_pressed(KEY_RIGHT)){
 		dir -= 90; // Right...
+		if (dir < 0){
+			dir = 270;
+		}
 	}
 	if (keyboard_check_pressed(KEY_LEFT)){
 		dir += 90; // Left...
-	}
-	if (dir >= 360 || dir <= -360){
-		dir = 0;
+		if (dir >= 360){
+			dir = 0;
+		}
 	}
 }
 

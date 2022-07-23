@@ -39,7 +39,11 @@ if (moveCounter >= moveCounterMax){
 			}
 			break;
 	}
-	actor_destroy();
-	actor_build();
 }
-moveCounter++;
+if (keyboard_check_pressed(vk_space)){
+	facing++;
+	if (facing > 3){
+		facing = 0;
+	}
+}
+//moveCounter++;
